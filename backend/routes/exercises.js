@@ -30,4 +30,30 @@ router.route('/add').post((req,res)=>{
 })
 
 
+router.route('/:id').get((req,res)=>{
+    Exercise.findById(req.params.id)
+    .then(exer => res.json(exer)).catch(err => res.status(400).json(err))
+})
+
+router.route('/:id').delete((req,res)=>{
+    Exercise.findByIdAndDelete(req.params.id).then(exer => res.json('Exercise deleted!'))
+    .catch(err => res.status(400).json(err))
+})
+
+
+router.route('/update/:id').post((req,res)=>{
+    Exercise.findById(req.params.id)
+        .then(exer => {
+            exer.username = req.body.username
+            exer.description = req.body.description
+            exer.duration = req.body.duration
+            exer.date = req.body.date
+
+            exer.save().then(()=> res.json('Updated exercise!'))
+                .catch(err => res.status(400).json(err))
+
+        }).catch(err => res.status(400).json(err))
+})
+
+
 module.exports = router
