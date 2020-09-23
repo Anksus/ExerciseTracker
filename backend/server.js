@@ -20,7 +20,7 @@ connection.once("open", () => {
   console.log("Connection with database is established!");
 });
 
-app.use("/exercise", exerciseRouter);
+app.use("/exercises", exerciseRouter);
 app.use("/users", userRouter);
 
 const port = 5000 || process.env.PORT;

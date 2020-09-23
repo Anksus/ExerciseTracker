@@ -17,7 +17,7 @@ class App extends React.Component {
           <EditExercise path="/edit-exercise" />
           <CreateExcercise path="/create-exercise" />
           <CreateUser path="/create-user" />
-          <ExerciseList path="/exercise-list" />
+          <ExerciseList path="/" />
         </Router>
       </div>
     );
