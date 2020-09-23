@@ -2,6 +2,34 @@ import React from "react";
 import axios from "axios";
 import { Link } from "@reach/router";
 
+const Exercise = (props) => (
+  <tr>
+    <td>{props.exercise.username}</td>
+    <td>{props.exercise.description}</td>
+    <td>{props.exercise.duration}</td>
+    <td>{props.exercise.date}</td>
+    <td>
+      <Link to={"/edit/" + props.exercise._id}>
+        <button type="button" className="btn btn-dark">
+          Edit
+        </button>
+      </Link>{" "}
+      |{" "}
+      <a
+        href="#"
+        onClick={() => {
+          props.deleteExercise(props.exercise._id);
+        }}
+      >
+        {" "}
+        <button type="button" className="btn btn-dark">
+          delete
+        </button>
+      </a>
+    </td>
+  </tr>
+);
+
 class ExerciseList extends React.Component {
   state = { exercises: [] };
 
@@ -14,28 +42,27 @@ class ExerciseList extends React.Component {
     console.log(this.state.exercises[0]);
   }
 
-  exerciseList = () => {
-    return this.state.exercises.map((currExer) => {
-      return (
-        // <ExerciseComp
-        //   exercise={currExer}
-        //   deleteExercise={this.deleteExercise}
-        //   key={currExer._id}
-        // />
-        <tr>
-          <td>{currExer.username}</td>
-          <td>{currExer.description}</td>
-          <td>{currExer.duration}</td>
-          <td>{currExer.date}</td>
-          <td>
-            <Link to={"/edit/" + currExer._id}>Edit</Link> |{" "}
-            <Link to="/hell">Delete</Link>
-          </td>
-        </tr>
-      );
+  deleteExercise = (id) => {
+    axios.delete("http://localhost:5000/exercises/" + id).then((response) => {
+      console.log(response.data);
+    });
+
+    this.setState({
+      exercises: this.state.exercises.filter((el) => el._id !== id),
     });
   };
 
+  exerciseList() {
+    return this.state.exercises.map((currentexercise) => {
+      return (
+        <Exercise
+          exercise={currentexercise}
+          deleteExercise={this.deleteExercise}
+          key={currentexercise._id}
+        />
+      );
+    });
+  }
   render() {
     return (
       <div>

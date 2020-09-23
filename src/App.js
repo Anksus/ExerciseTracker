@@ -14,7 +14,7 @@ class App extends React.Component {
       <div className="container">
         <Navbar />
         <Router>
-          <EditExercise path="/edit-exercise" />
+          <EditExercise path="/edit/:id" />
           <CreateExcercise path="/create-exercise" />
           <CreateUser path="/create-user" />
           <ExerciseList path="/" />
